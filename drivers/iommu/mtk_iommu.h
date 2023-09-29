@@ -173,6 +173,8 @@ struct mtk_iommu_data {
 
 	struct list_head		*hw_list;
 	struct list_head		hw_list_head;
+	struct mutex			mutex; /* Protect m4u_group/m4u_dom above */
+
 	struct list_head		list;
 	struct mtk_smi_larb_iommu	larb_imu[MTK_LARB_NR_MAX];
 };
