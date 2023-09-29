@@ -82,12 +82,7 @@ config BINDER_TRANSACTION_LATENCY_TRACKING
 	  checked whether it executed overtime.
 	  If yes, printing out the detailed info.
 
-config ANDROID_STRUCT_PADDING
-	bool "Android Struct Padding"
-
 config ANDROID_KABI_RESERVE
-	bool "Android KABI reserve padding"
-	default y
 	help
 	  This option enables the padding that the Android GKI kernel adds
 	  to many different kernel structures to support an in-kernel stable ABI
