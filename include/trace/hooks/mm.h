@@ -87,6 +87,12 @@ DECLARE_HOOK(android_vh_include_reserved_zone,
 DECLARE_HOOK(android_vh_show_mem,
 	TP_PROTO(unsigned int filter, nodemask_t *nodemask),
 	TP_ARGS(filter, nodemask));
+DECLARE_HOOK(android_vh_alloc_pages_slowpath_begin,
+	     TP_PROTO(gfp_t gfp_mask, unsigned int order, unsigned long *pdata),
+	     TP_ARGS(gfp_mask, order, pdata));
+DECLARE_HOOK(android_vh_alloc_pages_slowpath_end,
+	     TP_PROTO(gfp_t gfp_mask, unsigned int order, unsigned long data),
+	     TP_ARGS(gfp_mask, order, data));
 struct dirty_throttle_control;
 DECLARE_HOOK(android_vh_mm_dirty_limits,
 	TP_PROTO(struct dirty_throttle_control *const gdtc, bool strictlimit,
@@ -215,6 +221,9 @@ DECLARE_HOOK(android_vh_alloc_si,
 DECLARE_HOOK(android_vh_free_pages,
 	TP_PROTO(struct page *page, unsigned int order),
 	TP_ARGS(page, order));
+DECLARE_HOOK(android_vh_set_shmem_page_flag,
+	TP_PROTO(struct page *page),
+	TP_ARGS(page));
 /* macro versions of hooks are no longer required */
 
 #endif /* _TRACE_HOOK_MM_H */
