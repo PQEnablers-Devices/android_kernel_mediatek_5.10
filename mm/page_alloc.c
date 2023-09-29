@@ -4924,6 +4924,12 @@ retry:
 	if (current->flags & PF_MEMALLOC)
 		goto nopage;
 
+	trace_android_vh_alloc_pages_reclaim_bypass(gfp_mask, order,
+		alloc_flags, ac->migratetype, &page);
+
+	if (page)
+		goto got_pg;
+
 	/* Try direct reclaim and then allocating */
 	page = __alloc_pages_direct_reclaim(gfp_mask, order, alloc_flags, ac,
 							&did_some_progress);
@@ -5031,6 +5037,11 @@ nopage:
 		goto retry;
 	}
 fail:
+	trace_android_vh_alloc_pages_failure_bypass(gfp_mask, order,
+		alloc_flags, ac->migratetype, &page);
+	if (page)
+		goto got_pg;
+
 	warn_alloc(gfp_mask, ac->nodemask,
 			"page allocation failure: order:%u", order);
 got_pg:
@@ -5646,6 +5657,7 @@ void show_free_areas(unsigned int filter, nodemask_t *nodemask)
 		free_pcp,
 		global_zone_page_state(NR_FREE_CMA_PAGES));
 
+	trace_android_vh_show_mapcount_pages(NULL);
 	for_each_online_pgdat(pgdat) {
 		if (show_mem_node_skip(filter, pgdat->node_id, nodemask))
 			continue;
